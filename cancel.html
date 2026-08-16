@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXUS | 退会手続き</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0A0A0A;
+    --off-white: #F2F0EB;
+    --gold: #C9A84C;
+    --gold-light: #E8D49A;
+    --gray-mid: #3A3A3A;
+    --gray-light: #888;
+    --gray-border: #1E1E1E;
+    --red: #C0392B;
+    --red-light: #E74C3C;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--off-white);
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    padding: 20px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 0.5px solid var(--gray-border);
+  }
+  .nav-logo {
+    font-family: Georgia, serif;
+    font-size: 20px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  /* MAIN */
+  .main {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 80px 24px 120px;
+  }
+
+  .page-label {
+    font-size: 11px; letter-spacing: 0.25em;
+    color: var(--gray-light); text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .page-title {
+    font-family: Georgia, serif;
+    font-size: 32px; font-weight: 400;
+    margin-bottom: 12px;
+  }
+  .page-desc {
+    font-size: 14px; color: var(--gray-light);
+    line-height: 1.8; margin-bottom: 48px;
+  }
+
+  /* NOTICE BOX */
+  .notice {
+    border: 0.5px solid #2a1a1a;
+    background: #120a0a;
+    padding: 20px 24px;
+    border-radius: 4px;
+    margin-bottom: 40px;
+  }
+  .notice-title {
+    font-size: 13px; font-weight: 600;
+    color: #e87070; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .notice ul {
+    list-style: none; padding: 0;
+  }
+  .notice ul li {
+    font-size: 13px; color: rgba(242,240,235,0.7);
+    padding: 5px 0; display: flex; gap: 8px;
+  }
+  .notice ul li::before { content: '·'; color: #e87070; }
+
+  /* FORM */
+  .form-group { margin-bottom: 28px; }
+  .form-label {
+    display: block; font-size: 13px;
+    color: var(--gray-light); margin-bottom: 8px;
+    letter-spacing: 0.03em;
+  }
+  .form-label span { color: #e87070; margin-left: 4px; }
+  .form-input {
+    width: 100%; padding: 12px 16px;
+    background: #0f0f0f;
+    border: 0.5px solid var(--gray-border);
+    color: var(--off-white);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    border-radius: 2px;
+    font-family: inherit;
+  }
+  .form-input:focus { border-color: var(--gold); }
+  .form-select {
+    width: 100%; padding: 12px 16px;
+    background: #0f0f0f;
+    border: 0.5px solid var(--gray-border);
+    color: var(--off-white);
+    font-size: 14px;
+    outline: none;
+    border-radius: 2px;
+    font-family: inherit;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+  }
+  .form-select:focus { border-color: var(--gold); }
+  .form-textarea {
+    width: 100%; padding: 12px 16px;
+    background: #0f0f0f;
+    border: 0.5px solid var(--gray-border);
+    color: var(--off-white);
+    font-size: 14px;
+    outline: none;
+    border-radius: 2px;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 120px;
+    transition: border-color 0.2s;
+  }
+  .form-textarea:focus { border-color: var(--gold); }
+
+  /* CONFIRM CHECK */
+  .confirm-box {
+    border: 0.5px solid var(--gray-border);
+    padding: 20px 24px;
+    margin-bottom: 32px;
+    border-radius: 2px;
+  }
+  .confirm-label {
+    display: flex; align-items: flex-start; gap: 12px;
+    cursor: pointer; font-size: 14px;
+    color: rgba(242,240,235,0.8); line-height: 1.6;
+  }
+  .confirm-label input[type="checkbox"] {
+    margin-top: 3px; flex-shrink: 0;
+    width: 16px; height: 16px;
+    accent-color: var(--gold);
+    cursor: pointer;
+  }
+
+  /* SUBMIT */
+  .btn-cancel {
+    width: 100%; padding: 16px;
+    background: #1a0a0a;
+    border: 0.5px solid #3a1a1a;
+    color: #e87070;
+    font-size: 14px; font-weight: 600;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 2px;
+  }
+  .btn-cancel:hover { background: #2a0f0f; border-color: var(--red-light); }
+  .btn-cancel:disabled {
+    opacity: 0.4; cursor: not-allowed;
+  }
+
+  .btn-back {
+    display: block; text-align: center;
+    margin-top: 20px;
+    font-size: 13px; color: var(--gray-light);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .btn-back:hover { color: var(--off-white); }
+
+  /* DIVIDER */
+  .form-divider {
+    height: 0.5px; background: var(--gray-border);
+    margin: 36px 0;
+  }
+
+  /* SUCCESS STATE */
+  .success-screen {
+    display: none;
+    text-align: center;
+    padding: 60px 0;
+  }
+  .success-icon {
+    font-size: 48px; margin-bottom: 24px;
+  }
+  .success-title {
+    font-family: Georgia, serif;
+    font-size: 24px; font-weight: 400;
+    margin-bottom: 12px;
+  }
+  .success-desc {
+    font-size: 14px; color: var(--gray-light);
+    line-height: 1.8; max-width: 400px; margin: 0 auto 32px;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 40px;
+    border-top: 0.5px solid var(--gray-border);
+    text-align: center;
+  }
+  footer p { font-size: 12px; color: #444; }
+
+  @media (max-width: 640px) {
+    nav { padding: 16px 20px; }
+    .main { padding: 48px 20px 80px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">NEXUS</a>
+  <span style="font-size:13px; color:var(--gray-light);">退会手続き</span>
+</nav>
+
+<div class="main">
+
+  <!-- フォーム画面 -->
+  <div id="formScreen">
+    <p class="page-label">Cancellation</p>
+    <h1 class="page-title">退会手続き</h1>
+    <p class="page-desc">
+      ご利用いただきありがとうございました。<br>
+      以下のフォームにご記入のうえ、退会申請を送信してください。<br>
+      確認後、担当者よりご連絡いたします。
+    </p>
+
+    <div class="notice">
+      <p class="notice-title">⚠ 退会前にご確認ください</p>
+      <ul>
+        <li>退会後はすべてのサービスへのアクセスが終了します</li>
+        <li>最低契約期間（6ヶ月）を満たしていない場合、残期間分の料金が発生する場合があります</li>
+        <li>クーリング・オフ期間（契約日より8日以内）に該当する場合は、全額返金の対象となります</li>
+        <li>退会申請後、担当者からの確認連絡をもって手続き完了となります</li>
+      </ul>
+    </div>
+
+    <form id="cancelForm">
+
+      <div class="form-group">
+        <label class="form-label">お名前<span>*</span></label>
+        <input type="text" class="form-input" id="name" placeholder="山田 太郎" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">メールアドレス（ご登録時のもの）<span>*</span></label>
+        <input type="email" class="form-input" id="email" placeholder="example@email.com" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">ご契約中のプラン<span>*</span></label>
+        <select class="form-select" id="plan" required>
+          <option value="" disabled selected>プランを選択してください</option>
+          <option value="starter">スタータープラン（月額20,000円）</option>
+          <option value="standard">スタンダードプラン（月額30,000円）</option>
+          <option value="premium">プレミアムプラン（月額50,000円）</option>
+          <option value="executive">エグゼクティブプラン（月額100,000円）</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">退会理由<span>*</span></label>
+        <select class="form-select" id="reason" required>
+          <option value="" disabled selected>理由を選択してください</option>
+          <option value="goal">目標を達成したため</option>
+          <option value="cost">料金が負担になったため</option>
+          <option value="busy">忙しくてサービスを活用できないため</option>
+          <option value="unsatisfied">サービス内容が期待と異なったため</option>
+          <option value="other">その他</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">退会理由の詳細・ご意見（任意）</label>
+        <textarea class="form-textarea" id="detail" placeholder="サービスへのご意見・ご感想があればお聞かせください。今後の改善に活用させていただきます。"></textarea>
+      </div>
+
+      <div class="form-divider"></div>
+
+      <div class="confirm-box">
+        <label class="confirm-label">
+          <input type="checkbox" id="confirmCheck">
+          上記の注意事項を確認し、退会手続きを申請することに同意します
+        </label>
+      </div>
+
+      <button type="submit" class="btn-cancel" id="submitBtn" disabled>
+        退会を申請する
+      </button>
+      <a href="index.html" class="btn-back">← トップページに戻る</a>
+
+    </form>
+  </div>
+
+  <!-- 完了画面 -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">✉️</div>
+    <h2 class="success-title">退会申請を受け付けました</h2>
+    <p class="success-desc">
+      ご登録のメールアドレスに確認メールをお送りします。<br>
+      担当者より2営業日以内にご連絡いたします。<br><br>
+      ご利用いただきありがとうございました。
+    </p>
+    <a href="index.html" style="font-size:14px; color:var(--gold); text-decoration:none;">← トップページへ戻る</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2025 NEXUS. All rights reserved. ／ お問い合わせ: <a href="mailto:02yuda1031@gmail.com" style="color:var(--gray-light);">02yuda1031@gmail.com</a></p>
+</footer>
+
+<script>
+  // チェックボックスでボタンの有効・無効を切り替え
+  const check = document.getElementById('confirmCheck');
+  const btn = document.getElementById('submitBtn');
+  check.addEventListener('change', () => {
+    btn.disabled = !check.checked;
+  });
+
+  // フォーム送信
+  document.getElementById('cancelForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const plan = document.getElementById('plan').value;
+    const reason = document.getElementById('reason').value;
+
+    if (!name || !email || !plan || !reason) {
+      alert('必須項目をすべて入力してください。');
+      return;
+    }
+
+    // 完了画面に切り替え
+    document.getElementById('formScreen').style.display = 'none';
+    document.getElementById('successScreen').style.display = 'block';
+    window.scrollTo(0, 0);
+  });
+</script>
+
+</body>
+</html>
